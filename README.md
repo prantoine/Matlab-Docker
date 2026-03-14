@@ -135,4 +135,10 @@ This checklist worked for me to deploy matlab with pre-installed toolboxes via t
     mc cp matlab.yaml onyxia/floswald/matlab.yaml
 
 
+## Meta
 
+### kubectl setup on sspcloud
+
+*  start a vscode instance in admin mode
+*  that gives access to the kubernetes namespace
+*  e.g. can do `kubectl get pods`
