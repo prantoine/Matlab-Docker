@@ -13,6 +13,11 @@ kubectl create secret generic mc-host-secret-name --from-literal=mc-host-secret-
 #add the authentication file as a secret.
 #kubectl create secret generic basic-auth --from-file=~/work/auth
 
-kubectl create secret generic basic-auth --from-literal=auth="prantoine:$(openssl passwd -apr1 ${MATLAB_PASS})"
+#creating a secret will fail if it already exists. It is deleted and recreated if it already exists, allowing the user to change their password in vault when launching the service.
+if ! $(kubectl create secret generic basic-auth --from-literal=auth="prantoine:$(openssl passwd -apr1 ${MATLAB_PASS})") ; then
+	kubectl delete secret basic-auth
+	kubectl create secret generic basic-auth --from-literal=auth="prantoine:$(openssl passwd -apr1 ${MATLAB_PASS})")
+fi
+
 
 kubectl apply -f ~/work/matlab.yaml
