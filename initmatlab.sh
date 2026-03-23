@@ -2,6 +2,11 @@
 
 mc cp s3/prantoine/matlab.yaml ~/work/matlab.yaml
 
+if [ -z "${MATLAB_PASS}" ] ; then
+  echo "Error: MATLAB_PASS environment variable is not set."
+  exit 1
+fi
+
 #this bash variable holds the secret required for 'mc' to work within the container.
 #it is passed to the container through the 'create secret' command from kubectl.
 MC_HOST_s3="https://${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}:${AWS_SESSION_TOKEN}@${AWS_S3_ENDPOINT}"
