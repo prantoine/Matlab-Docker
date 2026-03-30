@@ -22,7 +22,5 @@ fi
 sudo apt update && sudo apt install gettext
 
 #this command subsitutes environment variables in the template with env variables currently in the shell.
-#it creates a file `matlab.yaml` with the substitutions applied.
-envsubst < ~/work/matlab_template.yaml > ~/work/matlab.yaml
-
-kubectl apply -f ~/work/matlab.yaml
+#it is piped into the kubectl command without creating any additional files.
+envsubst < ~/work/matlab_template.yaml | kubectl apply -f -
