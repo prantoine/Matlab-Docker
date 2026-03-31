@@ -46,8 +46,12 @@ kind: Ingress
 metadata:
   name: matlab
   namespace: user-floswald
+  annotations:
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
 spec:
-  ingressClassName: onyxia
+  ingressClassName: nginx
   rules:
   - host: user-floswald-999999-0.user.lab.sspcloud.fr
     http:
