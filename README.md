@@ -1,6 +1,6 @@
 # Matlab-Docker on SSPcloud
 
-> Author: Florian Oswald, JPE Data Editor
+> Authors: Florian Oswald, Pol Antoine
 
 **Table of Contents**
 
