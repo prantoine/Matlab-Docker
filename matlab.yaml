@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: matlab
-  namespace: user-floswald
+  namespace: user-prantoine
 spec:
   replicas: 1
   selector:
@@ -22,6 +22,12 @@ spec:
         volumeMounts:
         - mountPath: /dev/shm
           name: shm
+        env:
+        - name: MC_HOST_s3
+          valueFrom:
+            secretKeyRef:
+              name: mc-host-secret-name
+              key: mc-host-secret-key
       volumes:
       - name: shm
         emptyDir:
@@ -32,7 +38,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: matlab
-  namespace: user-floswald
+  namespace: user-prantoine
 spec:
   selector:
     app: matlab
@@ -61,4 +67,4 @@ spec:
               number: 8888
   tls:
   - hosts:
-    - user-floswald-999999-0.user.lab.sspcloud.fr
+    - user-prantoine-999999-0.user.lab.sspcloud.fr
