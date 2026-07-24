@@ -21,3 +21,14 @@ if ! $(kubectl create secret generic basic-auth --from-literal=auth="prantoine:$
 fi
 
 kubectl apply -f ~/work/matlab.yaml
+
+#this gets the full name of the pod with the matlab container, and waits for it to be in status 'Running'
+MATLAB_POD_NAME=$(kubectl get pods -o name | grep matlab)
+kubectl wait --for=jsonpath='{.status.phase}'=Running ${MATLAB_POD_NAME}
+
+#once the pod is running we can export whatever we want into it
+#this example command shows basic usage to copy stuff from S3 bucket into matlab container
+#on launch. Advantage is that users won't have to use manual 'mc' commands from within the matlab
+#container, which is achieved by starting an interactive command invite:
+#			kubectl exec ${MATLAB_POD_NAME} -it -- /bin/bash
+#kubectl exec ${MATLAB_POD_NAME} -- /bin/bash -c "mc cp --recursive s3/${VAULT_TOP_DIR}/remote_dir /path/to/matlab/filesystem/dir"
